@@ -1,32 +1,31 @@
-ubootÉèÖÃip
+ï»¿ubootè®¾ç½®ip
 setenv serverip 192.168.88.153
 setenv ipaddr 192.168.88.55
 
-°å×ÓÉèÖÃip
-ifconfig eth0 192.168.88.55 netmask 255.255.255.0
-route add default gw 192.168.88.1
+æ¿å­è®¾ç½®ip
+ifconfig eth0 192.168.88.55 netmask 255.255.255.0 | route add default gw 192.168.88.1
 
-¹ÒÔÚĞéÄâ»úUbuntu
+æŒ‚åœ¨è™šæ‹ŸæœºUbuntu
 mount -t nfs -o nolock -o tcp 192.168.88.153:/home/john/nfs /mnt
 
-¸»å«½»²æ¹¤¾ßÇ°×º
+å¯Œç€šäº¤å‰å·¥å…·å‰ç¼€
 V1.1
 arm-fullhan-linux-uclibcgnueabi-
 V1.2
 arm-fullhanv2-linux-uclibcgnueabi-
 
-²é¿´±àÒëÆ÷»·¾³
+æŸ¥çœ‹ç¼–è¯‘å™¨ç¯å¢ƒ
 echo 'main(){}'| arm-fullhanv2-linux-uclibcgnueabi-gcc -E -v -
 
-lrzsz½»²æ±àÒë
+lrzszäº¤å‰ç¼–è¯‘
 mkdir tmp
 ./configure --prefix=$PWD/tmp
-vim  config.cache  (gcc -> arm-fullhan-linux-uclibcgnueabi-gcc  & Line85 yes->no ¹Ønsl)
+vim  config.cache  (gcc -> arm-fullhan-linux-uclibcgnueabi-gcc  & Line85 yes->no å…³nsl)
 ./configure --prefix=$PWD/tmp
-config.h ×¢ÊÍµô L88 ºÍ L254
+config.h æ³¨é‡Šæ‰ L88 å’Œ L254
 make && make install
 
-Ô´Âë°²×°¿â
+æºç å®‰è£…åº“
 mkdir tmp
 ./configure --host=arm-fullhan-linux-uclibcgnueabi --prefix=$PWD/tmp
 make
@@ -37,39 +36,50 @@ sudo cp -rfd lib/* /opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi-b2/arm
 
 /opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi/arm-fullhan-linux-uclibcgnueabi/sysroot/usr
 
-ÖÆ×÷ JFFS2 ¾µÏñ
+åˆ¶ä½œ JFFS2 é•œåƒ
 mkfs.jffs2 --pad=0xB00000 -d ../rootfs_pub/ -e 0x10000 -l -o serial.jffs2
 
 sudo minicom -D /dev/ttyUSB0 -b 115200
-Ctrl¡ªA S Ñ¡Ôñ y modem Ñ¡ÔñÎÄ¼ş ´«Êä
+Ctrlâ€”A S é€‰æ‹© y modem é€‰æ‹©æ–‡ä»¶ ä¼ è¾“
 
-ÉèÖÃubootÆô¶¯²ÎÊı(8852 ĞèÉèÖÃÏµÍ³mem=29M)
-setenv bootargs 'console=ttyS0,115200 mem=29M ip=192.168.88.201 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),4M(kernel),11M(rootfs)'
+è®¾ç½®ubootå¯åŠ¨å‚æ•°(8852 éœ€è®¾ç½®ç³»ç»Ÿmem=29M)
+setenv bootargs 'console=ttyS0,115200 mem=32M ip=192.168.88.201 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),2M(kernel),10M(rootfs)'
 setenv bootcmd 'sf probe 0;sf read a1000000 90000 400000;bootm a1000000'
 sa
 
-ubootÊ¹ÓÃloady
-ÉÕÄÚºË
+ubootä½¿ç”¨loady
+çƒ§å†…æ ¸
 sf probe 0
 sf erase 90000 400000
 loady a1000000 115200
 sf write a1000000 90000 400000
-ÉÕfs
+çƒ§fs
 sf probe 0
 sf erase 490000 B00000
 loady a1000000 115200
 sf write a1000000 490000 B00000
-B00000Îª11MB´óĞ¡
+B00000ä¸º11MBå¤§å°
 
 kernel V1.1
 /home/john/fullhan/FH8856_IPC_V1.1.0_20190125/board_support/kernel/linux-3.0.8/arch/arm/boot/uImage
 fs V1.1
 /home/john/fullhan/FH8856_IPC_V1.1.0_20190125/board_support/rootfs/serial/serial.jffs2
 
-´®¿Ú´«ÊäÂ·¾¶
+fullhan V1.2 è·¯å¾„
+/home/john/fullhan/FH8856_IPC_V1.2.0_20200324/board_support/
+
+
+ä¸²å£ä¼ è¾“è·¯å¾„
 /home/john/lrzsz/
 
-ËÑË÷ÎÄ¼şÄÚÈİ
+æœç´¢æ–‡ä»¶å†…å®¹
 find . -name "*.h" | xargs grep "xxx"
 
-ÔËĞĞdemo³ÌĞò ½«hexÎÄ¼ş·ÅÖÃsample³ÌĞòÓÚÍ¬Ò»Â·¾¶ÏÂ
+è¿è¡Œdemoç¨‹åº å°†hexæ–‡ä»¶æ”¾ç½®sampleç¨‹åºäºåŒä¸€è·¯å¾„ä¸‹
+
+tftp çƒ§å†™ fs
+sf probe 0;sf erase 290000 A00000;tftp a1000000 fh8852_10M.jffs2;sf write a1000000 290000 A00000
+
+æŒ‚è½½nfs
+mount -t nfs 192.168.88.121:/home/john/nfs /mnt -o nolock
+
