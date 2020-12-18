@@ -6,7 +6,7 @@ setenv ipaddr 192.168.88.55
 ifconfig eth0 192.168.88.55 netmask 255.255.255.0 | route add default gw 192.168.88.1
 
 挂在虚拟机Ubuntu
-mount -t nfs -o nolock -o tcp 192.168.88.153:/home/john/nfs /mnt
+mount -t nfs -o nolock -o tcp 192.168.88.121:/home/john/nfs /mnt
 
 富瀚交叉工具前缀
 V1.1
@@ -37,7 +37,7 @@ sudo cp -rfd lib/* /opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi-b2/arm
 /opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi/arm-fullhan-linux-uclibcgnueabi/sysroot/usr
 
 制作 JFFS2 镜像
-mkfs.jffs2 --pad=0xB00000 -d ../rootfs_pub/ -e 0x10000 -l -o serial.jffs2
+mkfs.jffs2 --pad=0xC00000 -d ../rootfs_pub/ -e 0x10000 -l -o serial.jffs2
 
 sudo minicom -D /dev/ttyUSB0 -b 115200
 Ctrl—A S 选择 y modem 选择文件 传输
