@@ -2,3 +2,11 @@
 SUBDIRS = $(foreach d,$(shell find . -maxdepth 2 -mindepth 2 -name "Makefile" | xargs -i dirname {}),$(patsubst ./%,%,$(d)))
 
 
+
+
+# SDK V1.2 kernel±àÒë
+make menuconfig
+vim linux-3.0.8/kernel/timeconst.pl
+É¾³ý373ÐÐ µÄdefine£¨£©
+make fh885x
+
