@@ -10,7 +10,7 @@ mount -t nfs -o nolock -o tcp 192.168.88.121:/home/john/nfs /mnt
 
 
 制作 JFFS2 镜像
-mkfs.jffs2 --pad=0xC00000 -d ../rootfs_pub/ -e 0x10000 -l -o serial.jffs2
+mkfs.jffs2 --pad=0xC00000 -d ../rootfs_pub/ -e 0x10000 -l -o fh8856_12M.jffs2
 
 sudo minicom -D /dev/ttyUSB0 -b 115200
 Ctrl—A S 选择 y modem 选择文件 传输
@@ -23,15 +23,17 @@ sa
 uboot使用loady
 烧内核
 sf probe 0
-sf erase 90000 400000
+sf erase 90000 300000
 loady a1000000 115200
-sf write a1000000 90000 400000
+sf write a1000000 90000 300000
+
 烧fs
-sf probe 0
-sf erase 490000 B00000
+sf probe 0;sf erase 390000 C00000;tftp a1000000 fh8856_12M.jffs2;sf write a1000000 390000 C00000
+串口
 loady a1000000 115200
-sf write a1000000 490000 B00000
-B00000为11MB大小
+tftp传
+tftp a1000000 fh8856_12M.jffs2
+C00000为12MB大小
 
 kernel V1.1
 /home/john/fullhan/FH8856_IPC_V1.1.0_20190125/board_support/kernel/linux-3.0.8/arch/arm/boot/uImage

@@ -7,15 +7,10 @@ arm-fullhanv2-linux-uclibcgnueabi-
 查看编译器环境
 echo 'main(){}'| arm-fullhanv2-linux-uclibcgnueabi-gcc -E -v -
 
-lrzsz交叉编译
-mkdir tmp
-./configure --prefix=$PWD/tmp
-vim  config.cache  (gcc -> arm-fullhan-linux-uclibcgnueabi-gcc  & Line85 yes->no 关nsl)
-./configure --prefix=$PWD/tmp
-config.h 注释掉 L88 和 L254
-make && make install
+/opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi/arm-fullhan-linux-uclibcgnueabi/sysroot/usr
 
-源码安装库
+
+源码安装库通用指令
 mkdir tmp
 ./configure --host=arm-fullhan-linux-uclibcgnueabi --prefix=$PWD/tmp
 make
@@ -24,7 +19,14 @@ cd tmp/
 sudo cp -rf include/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/include
 sudo cp -rfd lib/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/lib
 
-/opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi/arm-fullhan-linux-uclibcgnueabi/sysroot/usr
+
+lrzsz交叉编译
+mkdir tmp
+./configure --prefix=$PWD/tmp
+vim  config.cache  (gcc -> arm-fullhan-linux-uclibcgnueabi-gcc  & Line85 yes->no 关nsl)
+./configure --prefix=$PWD/tmp
+config.h 注释掉 L88 和 L254
+make && make install
 
 
 移植openssl
@@ -32,5 +34,4 @@ mkdir tmp
 ./Configure --prefix=$PWD/tmp --cross-compile-prefix=arm-fullhanv2-linux-uclibcgnueabi- no-asm no-async shared linux-armv4
 make && make install
 cd tmp/
-sudo cp -rf include/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/include
-sudo cp -rfd lib/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/lib
+sudo cp -rf include/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/include && sudo cp -rfd lib/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/lib

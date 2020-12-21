@@ -1,0 +1,4 @@
+# 循环查找当前目录深度为2的含有Makefile文件的目录名，并去掉./ 前缀，把所有目录名给到SUBDIRS
+SUBDIRS = $(foreach d,$(shell find . -maxdepth 2 -mindepth 2 -name "Makefile" | xargs -i dirname {}),$(patsubst ./%,%,$(d)))
+
+
