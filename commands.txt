@@ -1,5 +1,5 @@
 ﻿uboot设置ip
-setenv serverip 192.168.88.153
+setenv serverip 192.168.88.121
 setenv ipaddr 192.168.88.55
 
 板子设置ip
@@ -8,6 +8,11 @@ ifconfig eth0 192.168.88.55 netmask 255.255.255.0 | route add default gw 192.168
 挂在虚拟机Ubuntu
 mount -t nfs -o nolock -o tcp 192.168.88.121:/home/john/nfs /mnt
 
+富瀚交叉工具前缀
+V1.1
+arm-fullhan-linux-uclibcgnueabi-
+V1.2
+arm-fullhanv2-linux-uclibcgnueabi-
 
 制作 JFFS2 镜像
 mkfs.jffs2 --pad=0xC00000 -d ../rootfs_pub/ -e 0x10000 -l -o fh8856_12M.jffs2
@@ -22,10 +27,7 @@ sa
 
 uboot使用loady
 烧内核
-sf probe 0
-sf erase 90000 300000
-loady a1000000 115200
-sf write a1000000 90000 300000
+sf probe 0;sf erase 90000 300000;tftp a1000000 uImage;sf write a1000000 90000 300000
 
 烧fs
 sf probe 0;sf erase 390000 C00000;tftp a1000000 fh8856_12M.jffs2;sf write a1000000 390000 C00000
@@ -33,7 +35,8 @@ sf probe 0;sf erase 390000 C00000;tftp a1000000 fh8856_12M.jffs2;sf write a10000
 loady a1000000 115200
 tftp传
 tftp a1000000 fh8856_12M.jffs2
-C00000为12MB大小
+300000 内核为3MB
+C00000 文件系统为12MB大小
 
 kernel V1.1
 /home/john/fullhan/FH8856_IPC_V1.1.0_20190125/board_support/kernel/linux-3.0.8/arch/arm/boot/uImage
@@ -49,12 +52,28 @@ fullhan V1.2 路径
 
 搜索文件内容
 find . -name "*.h" | xargs grep "xxx"
+grep -rn "xxx"
+
+替换文件内容
+sed -i "s/oldString/newString/g" filename
 
 运行demo程序 将hex文件放置sample程序于同一路径下
 
-tftp 烧写 fs
-sf probe 0;sf erase 290000 A00000;tftp a1000000 fh8852_10M.jffs2;sf write a1000000 290000 A00000
-
 挂载nfs
 mount -t nfs 192.168.88.121:/home/john/nfs /mnt -o nolock
+
+复用 gpio 为 pwm
+操作pinctrl实现
+echo "dev,PWM7,0,0" > /proc/driver/pinctrl
+echo "dev,PWM6,0,0" > /proc/driver/pinctrl
+echo "dev,PWM5,0,0" > /proc/driver/pinctrl
+echo "dev,PWM4,0,0" > /proc/driver/pinctrl
+echo "dev,PWM3,0,0" > /proc/driver/pinctrl
+echo "dev,PWM2,0,0" > /proc/driver/pinctrl
+echo "dev,PWM1,0,0" > /proc/driver/pinctrl
+echo "dev,PWM0,0,0" > /proc/driver/pinctrl
+再用cat一下这个设备 能看到是否改过来
+cat /proc/driver/pinctrl
+
+
 
