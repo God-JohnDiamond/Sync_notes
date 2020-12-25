@@ -69,10 +69,12 @@ echo "dev,PWM6,0,0" > /proc/driver/pinctrl
 echo "dev,PWM5,0,0" > /proc/driver/pinctrl
 echo "dev,PWM4,0,0" > /proc/driver/pinctrl
 echo "dev,PWM3,0,0" > /proc/driver/pinctrl
-echo "dev,PWM2,0,0" > /proc/driver/pinctrl
-echo "dev,PWM1,0,0" > /proc/driver/pinctrl
-echo "dev,PWM0,0,0" > /proc/driver/pinctrl
-再用cat一下这个设备 能看到是否改过来
+echo "mux, PWM0, PWM0, 1" > /proc/driver/pinctrl
+echo "mux, PWM1, PWM1, 1" > /proc/driver/pinctrl
+echo "mux, PWM2, PWM2, 1" > /proc/driver/pinctrl
+
+echo "mux, GPIO62, GPIO62, 0" > /proc/driver/pinctrl
+
 cat /proc/driver/pinctrl
 
 
