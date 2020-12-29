@@ -30,7 +30,7 @@ uboot使用loady
 sf probe 0;sf erase 90000 300000;tftp a1000000 uImage;sf write a1000000 90000 300000
 
 烧fs
-sf probe 0;sf erase 390000 C00000;tftp a1000000 fh8856_12M.jffs2;sf write a1000000 390000 C00000
+sf probe 0;sf erase 490000 A00000;tftp a1000000 fh8856_10M.jffs2;sf write a1000000 490000 A00000
 串口
 loady a1000000 115200
 tftp传
