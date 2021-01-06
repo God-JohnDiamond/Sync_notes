@@ -3,7 +3,7 @@ setenv serverip 192.168.88.121
 setenv ipaddr 192.168.88.55
 
 板子设置ip
-ifconfig eth0 192.168.88.55 netmask 255.255.255.0 | route add default gw 192.168.88.1
+ifconfig eth0 192.168.88.55 netmask 255.255.255.0 && route add default gw 192.168.88.1
 
 挂在虚拟机Ubuntu
 mount -t nfs -o nolock -o tcp 192.168.88.121:/home/john/nfs /mnt
@@ -59,8 +59,7 @@ sed -i "s/oldString/newString/g" filename
 
 运行demo程序 将hex文件放置sample程序于同一路径下
 
-挂载nfs
-mount -t nfs 192.168.88.121:/home/john/nfs /mnt -o nolock
+
 
 复用 gpio 为 pwm
 操作pinctrl实现
@@ -74,8 +73,27 @@ echo "mux, PWM1, PWM1, 1" > /proc/driver/pinctrl
 echo "mux, PWM2, PWM2, 1" > /proc/driver/pinctrl
 
 echo "mux, GPIO62, GPIO62, 0" > /proc/driver/pinctrl
+echo "mux, GPIO25, GPIO25, 0" > /proc/driver/pinctrl
+echo "mux, GPIO52, GPIO52, 0" > /proc/driver/pinctrl
 
 cat /proc/driver/pinctrl
 
+8856 双sensor io配置
+选通sensorA
+echo 0 > /sys/class/gpio/GPIO28/value
+选通sensorB
+echo 1 > /sys/class/gpio/GPIO28/value
 
+drv8833 power on
+echo 1 > /sys/class/gpio/GPIO62/value
+drv8833 select 1
+echo 1 > /sys/class/gpio/GPIO25/value
+drv8833 select 2
+echo 1 > /sys/class/gpio/GPIO52/value
 
+echo 1 > /sys/class/gpio/GPIO62/value && echo 1 > /sys/class/gpio/GPIO25/value
+
+挂载nfs
+mount -t nfs 192.168.88.121:/home/john/nfs /mnt -o nolock
+
+rm fh_app_vlc/sample_venc
