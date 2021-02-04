@@ -11,7 +11,9 @@ vim linux-3.0.8/kernel/timeconst.pl
 原因是新版本的lib32库不支持此用法
 make fh885x
 
-PWM0_1  PWM0_2  PWM0_3 PWM0_4 是 FOCUS
-PWM0_5  PWM0_6  PWM0_7 PWM0_8 是 ZOOM
+将default.script文件放于 /usr/share/udhcpc/ 目录
+然启动udhcp
+udhcpc -i &
+
 
 
