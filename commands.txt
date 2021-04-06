@@ -1,18 +1,28 @@
-﻿uboot设置ip
-setenv serverip 192.168.88.121
-setenv ipaddr 192.168.88.55
-
-板子设置ip
-ifconfig eth0 192.168.88.55 netmask 255.255.255.0 && route add default gw 192.168.88.1
-
-挂在虚拟机Ubuntu
 mount -t nfs -o nolock -o tcp 192.168.88.121:/home/john/nfs /mnt
+
+dd if=/dev/zero of=test bs=2M count=1
+
+ffplay 播放 yuv 文件命令
+ffplay -f rawvideo -video_size 1920x1080 a.yuv
+ffplay 播放 rgb 文件命令
+ffplay -f rawvideo -pixel_format rgb24 -video_size 480x480 texture.rgb
+
+ffmpeg -s 1280x720 -pix_fmt yuv420p -i  chn.yuv -pix_fmt rgb24  aaaa.rgb
+
+Linux设置ip
+ifconfig eth0 192.168.88.1 netmask 255.255.255.0 && route add default gw 192.168.88.177
+
+uboot设置ip
+setenv serverip 192.168.88.121;setenv ipaddr 192.168.88.221
 
 富瀚交叉工具前缀
 V1.1
 arm-fullhan-linux-uclibcgnueabi-
 V1.2
 arm-fullhanv2-linux-uclibcgnueabi-
+
+查看环境变量
+echo 'main(){}' | arm-fullhanv2-linux-uclibcgnueabi-gcc -E -v -
 
 制作 JFFS2 镜像
 mkfs.jffs2 --pad=0xC00000 -d ../rootfs_pub/ -e 0x10000 -l -o rootfs_12M.jffs2
@@ -21,18 +31,18 @@ sudo minicom -D /dev/ttyUSB0 -b 115200
 Ctrl—A S 选择 z modem 选择文件 传输
 
 设置uboot启动参数(8852 需设置系统mem=29M)
-setenv bootargs 'console=ttyS0,115200 mem=32M ip=192.168.88.55 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),3M(kernel),10M(rootfs)'
-setenv bootcmd 'sf probe 0;sf read a1000000 90000 400000;bootm a1000000'
+setenv bootargs 'console=ttyS0,115200 mem=32M ip=192.168.88.221 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),2M(kernel),10M(rootfs)'
+setenv bootcmd 'sf probe 0;sf read a1000000 90000 200000;bootm a1000000'
 sa
 
 uboot使用loady
 
-setenv bootcmd 'sf probe 0;sf read a1000000 90000 300000;bootm a1000000'
+setenv bootcmd 'sf probe 0;sf read a1000000 90000 200000;bootm a1000000'
 烧内核
-sf probe 0;sf erase 90000 300000;tftp a1000000 uImage_fh8856;sf write a1000000 90000 300000
+sf probe 0;sf erase 90000 200000;tftp a1000000 uImage_fh8856;sf write a1000000 90000 200000
 
 烧fs
-sf probe 0;sf erase 390000 A00000;tftp a1000000 fh8856_10M.jffs2;sf write a1000000 390000 A00000
+sf probe 0;sf erase 290000 A00000;tftp a1000000 rootfs_10M.jffs2;sf write a1000000 290000 A00000
 串口
 loady a1000000 115200
 tftp传

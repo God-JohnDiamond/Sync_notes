@@ -1,19 +1,42 @@
-# ѭ�����ҵ�ǰĿ¼���Ϊ2�ĺ���Makefile�ļ���Ŀ¼������ȥ��./ ǰ׺��������Ŀ¼������SUBDIRS
+# 循环查找当前目录深度为2的含有Makefile文件的目录名，并去掉./ 前缀，把所有目录名给到SUBDIRS
 SUBDIRS = $(foreach d,$(shell find . -maxdepth 2 -mindepth 2 -name "Makefile" | xargs -i dirname {}),$(patsubst ./%,%,$(d)))
 
 
 
 
-# SDK V1.2 kernel����
+# SDK V1.2 kernel编译
 make menuconfig
 vim linux-3.0.8/kernel/timeconst.pl
-ɾ��373�� ��define����
-ԭ�����°汾��lib32�ⲻ֧�ִ��÷�
+删除373行 的define（）
+原因是新版本的lib32库不支持此用法
 make fh885x
 
-��default.script�ļ����� /usr/share/udhcpc/ Ŀ¼
-Ȼ����udhcp
+将default.script文件放于 /usr/share/udhcpc/ 目录
+然启动udhcp
 udhcpc -i &
 
 
+1. 增加删除zoom配置文件
+2. 低电压不调焦 不对焦
+3. 增加ir cut控制
+
+
+yuv420转RGB24
+
+1. yuv数据格式
+分辨率1280*720为例
+连续存储 1280*720 个字节 y 分量，再存储 1280*720/4 个字节的 u 分量，再存储 1280*720/4 个字节 v 分量
+y 0 ~ 1280*720
+u 1280*720 ~ 1280*720*5/4
+v 1280*720*5/4 ~ 1280*720*6/4（=1280*720*3/2）
+三个分量内部均是行优先存储，三个部分之间是Y,U,V 顺序存储。
+
+
+2. RGB24格式
+RGB24图像每个像素用8比特位，共24个为表示，共3个字节，注意：在内存中RGB各分量的排列顺序为：BGR
+
+高位                    低位
+-------- -------- --------
+   B        G        R
+-------- -------- --------
 
