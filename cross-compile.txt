@@ -1,16 +1,16 @@
-¸»å«½»²æ¹¤¾ßÇ°×º
+å¯Œç€šäº¤å‰å·¥å…·å‰ç¼€
 V1.1
 arm-fullhan-linux-uclibcgnueabi-
 V1.2
 arm-fullhanv2-linux-uclibcgnueabi-
 
-²é¿´±àÒëÆ÷»·¾³
+æŸ¥çœ‹ç¼–è¯‘å™¨ç¯å¢ƒ
 echo 'main(){}'| arm-fullhanv2-linux-uclibcgnueabi-gcc -E -v -
 
 /opt/fullhan/toolchain/arm-fullhan-linux-uclibcgnueabi/arm-fullhan-linux-uclibcgnueabi/sysroot/usr
 
 
-Ô´Âë°²×°¿âÍ¨ÓÃÖ¸Áî
+æºç å®‰è£…åº“é€šç”¨æŒ‡ä»¤
 mkdir tmp
 ./configure --host=arm-fullhan-linux-uclibcgnueabi --prefix=$PWD/tmp
 make
@@ -20,16 +20,16 @@ sudo cp -rf include/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b
 sudo cp -rfd lib/* /opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/arm-fullhanv2-linux-uclibcgnueabi/sysroot/usr/lib
 
 
-lrzsz½»²æ±àÒë
+lrzszäº¤å‰ç¼–è¯‘
 mkdir tmp
 ./configure --prefix=$PWD/tmp
-vim  config.cache  (gcc -> arm-fullhan-linux-uclibcgnueabi-gcc  & Line85 yes->no ¹Ønsl)
+vim  config.cache  (gcc -> arm-fullhan-linux-uclibcgnueabi-gcc  & Line85 yes->no å…³nsl)
 ./configure --prefix=$PWD/tmp
-config.h ×¢ÊÍµô L88 ºÍ L254
+config.h æ³¨é‡Šæ‰ L88 å’Œ L254
 make && make install
 
 
-ÒÆÖ²openssl
+ç§»æ¤openssl
 mkdir tmp
 ./Configure --prefix=$PWD/tmp --cross-compile-prefix=arm-fullhanv2-linux-uclibcgnueabi- no-asm no-async shared linux-armv4
 make && make install
