@@ -102,3 +102,25 @@ echo 1 > /sys/class/gpio/GPIO25/value
 drv8833 select 2
 echo 1 > /sys/class/gpio/GPIO52/value
 
+
+
+推：
+git branch -a 
+查看所有分支
+git checkout -b test01
+创建本地test01分支
+git push --set-upstream origin test01
+把本地test01分支推送到远程
+
+拉：
+将远程git仓库里的指定分支拉取到本地（本地不存在的分支）
+git checkout -b 本地分支名 origin/远程分支名
+
+删：
+删除远程分支
+git push origin --delete test01
+
+设置本地分支与远程分支的追踪：
+git branch --set-upstream-to=origin/远程分支名 本地分支名
+查看本地分支与远程分支的追踪：
+git branch -vv
