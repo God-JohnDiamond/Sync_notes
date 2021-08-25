@@ -1,4 +1,14 @@
-mount -t nfs -o nolock -o tcp 192.168.88.121:/home/john/nfs /mnt
+mount -t nfs -o nolock -o tcp 192.168.88.141:/home/john/nfs /mnt
+
+/opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/bin/arm-fullhanv2-linux-uclibcgnueabi-gcc
+/opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/bin/arm-fullhanv2-linux-uclibcgnueabi-ar
+/opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/bin/arm-fullhanv2-linux-uclibcgnueabi-ranlib
+
+edbe3ea34591d884ee64f0f36fe50e6e
+http://resource.parkone.cn/tmp/20210702/sample_venc
+
+91bc170eb1ae746263e36236602c1b85
+http://resource.parkone.cn/tmp/20210702/sample_debug
 
 dd if=/dev/zero of=test bs=2M count=1
 
