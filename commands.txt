@@ -1,14 +1,25 @@
-mount -t nfs -o nolock -o tcp 192.168.88.141:/home/john/nfs /mnt
+mount -t nfs -o nolock -o tcp 192.168.88.141:/home/john/john/nfs /mnt
 
-/opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/bin/arm-fullhanv2-linux-uclibcgnueabi-gcc
-/opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/bin/arm-fullhanv2-linux-uclibcgnueabi-ar
-/opt/fullhan/toolchain/arm-fullhanv2-linux-uclibcgnueabi-b2/bin/arm-fullhanv2-linux-uclibcgnueabi-ranlib
 
-edbe3ea34591d884ee64f0f36fe50e6e
-http://resource.parkone.cn/tmp/20210702/sample_venc
+gcc basic-tutorial-5.c -o basic-tutorial-5 `pkg-config --cflags --libs gstreamer-1.0 gtk+-2.0`
 
-91bc170eb1ae746263e36236602c1b85
-http://resource.parkone.cn/tmp/20210702/sample_debug
+###################################################################################################################
+
+固件升级
+
+v1.0.4-mid 长春地址
+84407313a51765562d9808bef172a9c6
+http://resource.parkone.cn/tmp/20200928/sample_venc
+
+v0.0.2-debug 增加日志zip压缩
+4d2b6b624702568c6c9f1d543680c614
+http://resource.parkone.cn/tmp/20200928/sample_debug
+
+
+v1.0.3-mid
+679767686e18bc0a56290dd160fd18ce  http://resource.parkone.cn/tmp/20210816/sample_venc
+
+###################################################################################################################
 
 dd if=/dev/zero of=test bs=2M count=1
 
@@ -20,7 +31,7 @@ ffplay -f rawvideo -pixel_format rgb24 -video_size 480x480 texture.rgb
 ffmpeg -s 1280x720 -pix_fmt yuv420p -i  chn.yuv -pix_fmt rgb24  aaaa.rgb
 
 Linux设置ip
-ifconfig eth0 192.168.88.1 netmask 255.255.255.0 && route add default gw 192.168.88.177
+ifconfig eth0 192.168.88.188 netmask 255.255.255.0 && route add default gw 192.168.88.1
 
 uboot设置ip
 setenv serverip 192.168.88.121;setenv ipaddr 192.168.88.221
@@ -35,30 +46,36 @@ arm-fullhanv2-linux-uclibcgnueabi-
 echo 'main(){}' | arm-fullhanv2-linux-uclibcgnueabi-gcc -E -v -
 
 制作 JFFS2 镜像
-mkfs.jffs2 --pad=0xC00000 -d ../rootfs_pub/ -e 0x10000 -l -o rootfs_12M.jffs2
+mkfs.jffs2 --pad=0xD00000 -d ../rootfs_pub/ -e 0x10000 -l -o rootfs_13M.jffs2
 
 sudo minicom -D /dev/ttyUSB0 -b 115200
 Ctrl—A S 选择 z modem 选择文件 传输
 
 设置uboot启动参数(8852 需设置系统mem=29M)
-setenv bootargs 'console=ttyS0,115200 mem=32M ip=192.168.88.221 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),2M(kernel),10M(rootfs)'
+setenv bootargs 'console=ttyS0,115200 mem=32M ip=192.168.88.177 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),2M(kernel),13M(rootfs)'
+
 setenv bootcmd 'sf probe 0;sf read a1000000 90000 200000;bootm a1000000'
 sa
 
 uboot使用loady
+
+
+烧uboot
+sf probe 0;sf erase 50000 40000;tftp a1000000 u-boot_2pin.bin;sf write a1000000 50000 40000
 
 setenv bootcmd 'sf probe 0;sf read a1000000 90000 200000;bootm a1000000'
 烧内核
 sf probe 0;sf erase 90000 200000;tftp a1000000 uImage_fh8856;sf write a1000000 90000 200000
 
 烧fs
-sf probe 0;sf erase 290000 A00000;tftp a1000000 rootfs_10M.jffs2;sf write a1000000 290000 A00000
+sf probe 0;sf erase 290000 D00000;tftp a1000000 rootfs_13M.jffs2;sf write a1000000 290000 D00000
 串口
 loady a1000000 115200
 tftp传
-tftp a1000000 fh8856_12M.jffs2
-300000 内核为3MB
-C00000 文件系统为12MB大小
+tftp a1000000 rootfs_13M.jffs2
+40000  uboot大小256KB
+200000 内核为2MB
+D00000 文件系统为13MB大小
 
 kernel V1.1
 /home/john/fullhan/FH8856_IPC_V1.1.0_20190125/board_support/kernel/linux-3.0.8/arch/arm/boot/uImage
