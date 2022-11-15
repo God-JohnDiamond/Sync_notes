@@ -1,0 +1,19 @@
+git clone git@192.168.88.152:/home/git/repositories/netmeeting.git
+
+x86 qt pro
+INCLUDEPATH += \
+    /usr/include/gstreamer-1.0/ \
+    /usr/include/glib-2.0/ \
+    /usr/lib/x86_64-linux-gnu/glib-2.0/include/
+	
+/*
+ chip1: 1:cam  2: UAV   3: ORI OUT1   4: ORI OUT12
+ chip2: 1:cam  2:       3:   4: rK 
+ chip3: 1:cam  2:       3:   4: rK  
+*/
+
+./configure --with-ssl=/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support --with-zlib=/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support --disable-shared --target=arm-fullhanv2-linux-uclibcgnueabi --host=arm-fullhanv2-linux-uclibcgnueabi --prefix=/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support/tools/tools/curl-7.83.0/output
+
+CPPFLAGS="-I/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support/include" LDFLAGS="-L/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support/lib" LIBS="-ldl -ssl -crypto" ./configure --host=arm-fullhanv2-linux-uclibcgnueabi --with-openssl=/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support/lib --enable-static --prefix=/home/john/john/fullhan/FH8856_IPC_V1.2.0_20200324/media_support/tools/tools/curl-7.83.0/output
+
+./config --host=arm-fullhanv2-linux-uclibcgnueabi --disable-shared

@@ -1,25 +1,27 @@
 mount -t nfs -o nolock -o tcp 192.168.88.141:/home/john/john/nfs /mnt
 
+-L../../lib/dynamic -lrtsp
+500W12P5
+hex
+
+echo "nameserver 211.136.17.107" > /etc/resolv.conf
+
+execl查重
+=IF(COUNTIF(A:A,A2)>1,"重复","")
+
+debug client发送的数据
+7d 07 01 00 00 01 00 01 02
 
 gcc basic-tutorial-5.c -o basic-tutorial-5 `pkg-config --cflags --libs gstreamer-1.0 gtk+-2.0`
 
-###################################################################################################################
+vim 保存没权限修改文件
+:w !sudo tee %
 
-固件升级
-
-v1.0.4-mid 长春地址
-84407313a51765562d9808bef172a9c6
-http://resource.parkone.cn/tmp/20200928/sample_venc
-
-v0.0.2-debug 增加日志zip压缩
-4d2b6b624702568c6c9f1d543680c614
-http://resource.parkone.cn/tmp/20200928/sample_debug
+虚拟机共享文件夹不显示
+vmhgfs-fuse .host:/ /mnt/ -o nonempty -o allow_other
+sudo vmhgfs-fuse .host:/ /mnt/hgfs/ -o allow_other -o uid=1000
 
 
-v1.0.3-mid
-679767686e18bc0a56290dd160fd18ce  http://resource.parkone.cn/tmp/20210816/sample_venc
-
-###################################################################################################################
 
 dd if=/dev/zero of=test bs=2M count=1
 
@@ -37,8 +39,6 @@ uboot设置ip
 setenv serverip 192.168.88.121;setenv ipaddr 192.168.88.221
 
 富瀚交叉工具前缀
-V1.1
-arm-fullhan-linux-uclibcgnueabi-
 V1.2
 arm-fullhanv2-linux-uclibcgnueabi-
 
@@ -51,7 +51,7 @@ mkfs.jffs2 --pad=0xD00000 -d ../rootfs_pub/ -e 0x10000 -l -o rootfs_13M.jffs2
 sudo minicom -D /dev/ttyUSB0 -b 115200
 Ctrl—A S 选择 z modem 选择文件 传输
 
-设置uboot启动参数(8852 需设置系统mem=29M)
+设置uboot启动参数(8852 需设置系统mem=29M ip192.168.88.188)
 setenv bootargs 'console=ttyS0,115200 mem=32M ip=192.168.88.177 root=/dev/mtdblock4 rootfstype=jffs2 mtdparts=spi_flash:256k(bootstrap),64k(uboot-env),256k(uboot),2M(kernel),13M(rootfs)'
 
 setenv bootcmd 'sf probe 0;sf read a1000000 90000 200000;bootm a1000000'
@@ -63,9 +63,8 @@ uboot使用loady
 烧uboot
 sf probe 0;sf erase 50000 40000;tftp a1000000 u-boot_2pin.bin;sf write a1000000 50000 40000
 
-setenv bootcmd 'sf probe 0;sf read a1000000 90000 200000;bootm a1000000'
 烧内核
-sf probe 0;sf erase 90000 200000;tftp a1000000 uImage_fh8856;sf write a1000000 90000 200000
+sf probe 0;sf erase 90000 200000;tftp a1000000 fh8856/uImage_fh8856;sf write a1000000 90000 200000
 
 烧fs
 sf probe 0;sf erase 290000 D00000;tftp a1000000 rootfs_13M.jffs2;sf write a1000000 290000 D00000
@@ -130,6 +129,16 @@ drv8833 select 2
 echo 1 > /sys/class/gpio/GPIO52/value
 
 
+curl -X POST -d '{"dev_id": "868753051580038", "version": "v0.0.1-rad", "vbat": 3.141592, "rssi": "-50dbm", "iccid": "89861121239032667005", "events": [ [2, 1633750695], [1, 1633750743]] }' "http://camera-monitor-deployment-server.parkone.cn/radar/v1/dev/event" -vvv
+
+
+curl -X POST -d '{"dev_id": "868753051580038", "version": "v0.0.1-rad", "timestamp": 1649821829, "vbat": 3.555555, "rssi": "-50dbm", "iccid": "89861121239032667005", "events": [[1, 1649600933], [2, 1649687333]]}' "http://data-relay-server.parkone.cn/api/low_power/message" -vvv
+
+
+
+
+curl -X POST -d '{"dev_id": "868753058649802", "version": "v0.0.1-rad", "timestamp": 1649821829, "vbat": 3.82, "rssi": "-50dbm", "iccid": "89861121239032667005", "events": [[1, 1649600933], [2, 1649687333]]}' "http://data-relay-server.parkone.cn/api/low_power/message" -vvv
+
 
 推：
 git branch -a 
@@ -151,3 +160,24 @@ git push origin --delete test01
 git branch --set-upstream-to=origin/远程分支名 本地分支名
 查看本地分支与远程分支的追踪：
 git branch -vv
+
+
+git新建分支并提交当前修改代码###########################
+（1）新建分支
+
+git branch xxx (xxx填写你的分支名称)
+（2）查看所有分支
+
+git branch -a
+（3）切换到某一分支
+
+git checkout xxx (xxx填写要切换的分支名称）
+（4）添加修改代码到缓存（注意最后的"."前面有个空格
+
+git add .
+（5）添加提交代码的备注
+
+git commit -m "xxx" （xxx为本次提交代码的备注）
+（6）提交代码到指定分支
+
+git push origin xxx （xxx为要提交代码的分支名称）
